@@ -1,4 +1,4 @@
-name: Deploy Lambda
+name: Deploy Serverless API
 
 on:
   push:
@@ -7,24 +7,31 @@ on:
 
 jobs:
   deploy:
-    name: deploy
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [22.x]
+
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-    
-    - name: serverless deploy
-      uses: serverless/github-action@v3.2
-      with:
-        args: deploy
-      env:
-        SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
-        # or if using AWS credentials directly
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      # Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Set up Node.js (update to v16 or v18, as v22 might not be officially supported yet)
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'   # You may change this to a stable version like '16' or '18'
+
+      # Install dependencies including serverless-offline
+      - name: Install dependencies
+        run: |
+          npm install
+
+      # Deploy using Serverless GitHub Action
+      - name: Deploy API to AWS using Serverless GitHub Action
+        uses: serverless/github-action@v3.2
+        with:
+          args: deploy
+        env:
+          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+

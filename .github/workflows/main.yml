@@ -1,0 +1,44 @@
+name: Deploy to AWS with Serverless
+
+# Trigger the workflow when code is pushed to the main branch
+on:
+  push:
+    branches:
+      - main  # Change this if you're using a different branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # You can use windows-latest or macos-latest if needed
+    
+    steps:
+      # Step 1: Checkout code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Node.js (Ensure the Node.js version matches your Serverless configuration)
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Change this to match your Node.js version in serverless.yml
+
+      # Step 3: Install project dependencies (e.g., serverless framework, node modules)
+      - name: Install dependencies
+        run: |
+          npm install  # This installs your project dependencies (e.g., serverless dependencies)
+
+      # Step 4: Install Serverless Framework globally
+      - name: Install Serverless Framework
+        run: npm install -g serverless
+
+      # Step 5: Deploy the application to AWS using Serverless Framework
+      - name: Deploy to AWS
+        run: serverless deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'us-east-1'  # You can change this region to your desired AWS region
+
+      # Optional Step: Output the deployment results to GitHub Actions logs
+      - name: Output Deployment URL
+        run: |
+          echo "Deployed URL: $(serverless info --verbose)"

@@ -1,0 +1,20 @@
+service: serverless-api
+
+provider:
+  name: aws
+  runtime: nodejs22.x  # Or whichever runtime you're using
+  region: us-east-1
+  stage: dev
+
+functions:
+  hello:
+    handler: src/handler.hello
+    events:
+      - http:
+          path: hello
+          method: get
+
+plugins:
+  - serverless-offline  # Add this line to load serverless-offline plugin
+
+

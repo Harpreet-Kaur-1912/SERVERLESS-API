@@ -1,5 +1,6 @@
 Serverless API with AWS Lambda and API Gateway
 
+
 This repository contains a simple Serverless API deployed using AWS Lambda and API Gateway. The API is a basic example of creating a serverless function that responds to HTTP requests, and it is deployed using the Serverless Framework.
 
 Prerequisites
@@ -77,7 +78,9 @@ serverless remove --stage dev --region us-east-1
 This will clean up all the resources, including the Lambda function and API Gateway endpoint.
 
 Folder Structure
+
 The folder structure of the project is as follows:
+
 bash
 Copy
 serverless-api/

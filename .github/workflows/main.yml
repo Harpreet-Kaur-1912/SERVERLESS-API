@@ -19,7 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'  # Change this to match your Node.js version in serverless.yml
+          node-version: '22'  # Change this to match your Node.js version in serverless.yml
 
       # Step 3: Install project dependencies (e.g., serverless framework, node modules)
       - name: Install dependencies

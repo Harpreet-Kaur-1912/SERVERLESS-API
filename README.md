@@ -84,10 +84,15 @@ The folder structure of the project is as follows:
 bash
 Copy
 serverless-api/
+
 ├── handler.js             # Lambda function code
+
 ├── serverless.yml         # Serverless configuration
+
 ├── package.json           # Project dependencies
+
 └── .gitignore             # Files and directories to ignore
+
 
 Project Description
 •	handler.js: Contains the Lambda function code. This is where you define the logic for your API endpoints.
